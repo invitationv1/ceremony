@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Photo Album</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        
+        .book {
+            position: relative;
+            width: 800px;
+            height: 500px;
+            perspective: 2000px;
+        }
+        
+        .cover {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #925a38;
+            border-radius: 5px;
+            box-shadow: 0 0 30px rgba(0,0,0,0.2);
+            transform: translateZ(-10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: -1;
+        }
+        
+        .cover h1 {
+            color: white;
+            font-size: 2.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            text-align: center;
+        }
+        
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            transform-origin: left center;
+            transition: transform 1s cubic-bezier(0.645, 0.045, 0.355, 1);
+            transform-style: preserve-3d;
+            cursor: pointer;
+            background: white;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border-radius: 0 5px 5px 0;
+        }
+
+        .page:first-of-type.flipped {
+            transform: rotateY(-180deg);
+        }
+
+        .page:first-of-type.flipped + .page {
+            transform: translateX(0);
+            z-index: 1 !important;
+        }
+        
+        .page.flipped {
+            transform: rotateY(-180deg);
+        }
+        
+        .page-front, .page-back {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            padding: 30px;
+            box-sizing: border-box;
+            backface-visibility: hidden;
+            overflow: hidden;
+            border-radius: 0 5px 5px 0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .page-back {
+            transform: rotateY(180deg);
+            background: #fcfcfc;
+            background-image: radial-gradient(#f8e1e8 3px, transparent 3px);
+            background-size: 30px 30px;
+        }
+        
+        .photo-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 10px solid white;
+            transition: transform 0.3s ease;
+        }
+        
+        img:hover {
+            transform: scale(1.02);
+        }
+        
+        .caption {
+            text-align: center;
+            margin-top: 15px;
+            color: #555;
+            font-style: italic;
+        }
+        
+        .page-back h1 {
+            color: #d23369;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 32px;
+            font-family: 'Brush Script MT', cursive;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .info-item {
+            margin-bottom: 20px;
+            display: flex;
+            animation: fadeInLeft 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateX(-20px);
+        }
+        
+        .info-item:nth-child(2) {
+            animation-delay: 0.3s;
+        }
+        
+        .info-item:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+        
+        .info-item:nth-child(4) {
+            animation-delay: 0.9s;
+        }
+        
+        .info-item strong {
+            width: 100px;
+            color: #b13060;
+            font-family: 'Georgia', serif;
+        }
+        
+        .info-item p {
+            margin: 0;
+            flex: 1;
+            font-family: 'Georgia', serif;
+        }
+        
+        .description {
+            margin-top: 20px;
+            line-height: 1.6;
+            color: #444;
+            animation: fadeInUp 1s ease-out 1.2s forwards;
+            opacity: 0;
+            font-family: 'Georgia', serif;
+        }
+        
+        .page-indicator {
+            position: absolute;
+            bottom: 10px;
+            right: 20px;
+            color: #aaa;
+            font-size: 12px;
+        }
+        
+        .flip-hint {
+            position: absolute;
+            right: 20px;
+            bottom: 50%;
+            color: #aaa;
+            font-size: 14px;
+            transform: translateY(50%);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeInLeft {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: scale(0);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .decorative-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 15px solid transparent;
+            border-image: linear-gradient(45deg, #f8c8d6, #d65d86, #f8c8d6) 1;
+            pointer-events: none;
+            opacity: 0;
+            animation: fadeIn 1s ease-out 0.5s forwards;
+        }
+
+        /* Add these styles to your existing CSS */
+        #heartCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="heartCanvas"></canvas>
+    <div class="book">
+        <!-- Second Page (now first) -->
+        <div class="page" onclick="this.classList.toggle('flipped')">
+            <div class="page-front">
+                <div class="decorative-border"></div>
+                <h1>Our Special Day ✨</h1>
+                <div class="info-item">
+                    <strong>Date:</strong>
+                    <p>March 14, 2025</p>
+                </div>
+                <div class="info-item">
+                    <strong>Time:</strong>
+                    <p>12:00 PM - 3:00 PM</p>
+                </div>
+                <div class="info-item">
+                    <strong>Location:</strong>
+                    <a href="https://maps.app.goo.gl/oRhEBiqtFktRqEFP7?g_st=com.google.maps.preview.copy">
+                        click here
+                    </a>
+                </div>
+                <div class="description">
+                    <p>Please join us for this special occasion as we celebrate together. The ceremony will be followed by lunch. We look forward to sharing these cherished moments with you.</p>
+                </div>
+                <div class="page-indicator">Page 1</div>
+            </div>
+        </div>
+        <!-- First Page (now second) -->
+        <div class="page" onclick="this.classList.toggle('flipped')">
+            <div class="page-front">
+                <div class="photo-container">
+                    <img src="https://res.cloudinary.com/dxgyrgr2p/image/upload/v1741258444/yash/iz1wmifdbpm32mr3mwqo.jpg" alt="Family Photo">
+                </div>
+                <div class="caption">Beautiful moments with our loved ones</div>
+                <div class="flip-hint">Click to flip →</div>
+                <div class="page-indicator">Page 2</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add this before your existing script
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Heart class
+        class Heart {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = canvas.height + 20;
+                this.size = Math.random() * 15 + 10;
+                this.speed = Math.random() * 2 + 1;
+                this.color = `rgba(210, 51, 105, ${Math.random() * 0.5 + 0.2})`;
+            }
+
+            draw() {
+                ctx.fillStyle = this.color;
+                ctx.beginPath();
+                const topX = this.x;
+                const topY = this.y;
+                
+                ctx.moveTo(topX, topY);
+                ctx.bezierCurveTo(
+                    topX - this.size/2, topY - this.size/2,
+                    topX - this.size, topY + this.size/3,
+                    topX, topY + this.size
+                );
+                ctx.bezierCurveTo(
+                    topX + this.size, topY + this.size/3,
+                    topX + this.size/2, topY - this.size/2,
+                    topX, topY
+                );
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            update() {
+                this.y -= this.speed;
+            }
+        }
+
+        const hearts = [];
+        
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Add new hearts
+            if (Math.random() < 0.05) {
+                hearts.push(new Heart());
+            }
+            
+            // Update and draw hearts
+            for (let i = hearts.length - 1; i >= 0; i--) {
+                hearts[i].update();
+                hearts[i].draw();
+                
+                // Remove hearts that are off screen
+                if (hearts[i].y < -20) {
+                    hearts.splice(i, 1);
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // Modified event listener for the first page
+        document.querySelector('.page').addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+
+        // Modified event listener for the second page
+        document.querySelector('.page:nth-child(3)').addEventListener('click', function() {
+            this.classList.toggle('flipped');
+        });
+    </script>
+</body>
+</html>
