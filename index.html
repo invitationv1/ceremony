@@ -331,108 +331,102 @@
             .book {
                 width: 100%;
                 max-width: 400px;
-                height: 85vh;
-                margin: 20px auto;
-            }
-
-            .page,
-            .page-front,
-            .page-back {
-                height: 100% !important;
+                height: 80vh; /* Reduced from 85vh */
+                margin: 15px auto; /* Reduced margin */
             }
 
             .mobile-invitation {
-                padding: 1rem 0.8rem;
+                padding: 0.6rem 0.4rem; /* Reduced padding */
             }
 
+            /* Header adjustments */
             .invitation-header h1 {
-                font-size: 1.3rem !important;
+                font-size: 1.2rem !important; /* Smaller font */
+                line-height: 1.3 !important; /* Better line height for wrapping */
+                padding: 0 0.5rem; /* Add some padding */
+                margin-bottom: 0.5rem !important;
+            }
+
+            /* Main content adjustments */
+            .invitation-main {
+                gap: 0.4rem; /* Reduced gap */
             }
 
             .invitation-main h2 {
-                font-size: 1.1rem !important;
+                font-size: 1rem !important;
+                margin-bottom: 0.1rem !important;
             }
 
             .invitation-main h2 span {
-                font-size: 0.9rem !important;
+                font-size: 0.8rem !important;
             }
 
             .invitation-main p {
-                font-size: 1rem !important;
+                font-size: 0.9rem !important;
+                margin: 0.1rem 0 !important;
             }
 
             .invitation-main h2[style*="color: #FFD700"] {
-                font-size: 1.2rem !important;
-            }
-
-            /* Date section */
-            div[style*="border-top: 1px solid"] {
-                width: 100% !important;
-                padding: 0.4rem 0 !important;
-            }
-
-            div[style*="border-top: 1px solid"] span {
-                font-size: 1rem !important;
-            }
-
-            div[style*="border-top: 1px solid"] span[style*="font-size: 2.5rem"] {
-                font-size: 2rem !important;
-                padding: 0 0.4rem !important;
-            }
-
-            div[style*="border-top: 1px solid"] p {
-                font-size: 1rem !important;
-            }
-
-            /* Venue section */
-            .venue-container {
-                padding: 0.4rem;
-                margin: 0.5rem auto;
-            }
-
-            .venue-container h3 {
                 font-size: 1.1rem !important;
             }
 
-            .venue-container p {
+            /* Date section adjustments */
+            div[style*="border-top: 1px solid"] {
+                padding: 0.3rem 0 !important;
+                margin: 0.2rem auto !important;
+            }
+
+            div[style*="border-top: 1px solid"] span {
                 font-size: 0.9rem !important;
             }
 
-            /* Footer section */
-            .contact-container {
-                flex-direction: column;
-                gap: 0.5rem;
-                align-items: center;
+            div[style*="border-top: 1px solid"] span[style*="font-size: 2.5rem"] {
+                font-size: 1.8rem !important;
+                padding: 0 0.3rem !important;
             }
 
-            .contact-container div {
-                text-align: center !important;
+            div[style*="border-top: 1px solid"] p {
+                font-size: 0.9rem !important;
+                margin: 0.1rem 0 !important;
+            }
+
+            /* Venue container adjustments */
+            .venue-container {
+                padding: 0.3rem;
+                margin: 0.3rem auto;
+            }
+
+            .venue-container h3 {
+                font-size: 1rem !important;
+                margin: 0.1rem 0 !important;
+            }
+
+            .venue-container p {
+                font-size: 0.8rem !important;
+                line-height: 1.3 !important;
+            }
+
+            /* Footer adjustments */
+            .invitation-footer {
+                margin-bottom: 0.4rem;
+            }
+
+            .contact-container {
+                gap: 0.3rem;
+                margin-top: 0.3rem;
             }
 
             .contact-container h3 {
-                font-size: 1rem !important;
+                font-size: 0.9rem !important;
+                margin: 0 !important;
             }
 
             .contact-container p {
-                font-size: 0.9rem !important;
+                font-size: 0.8rem !important;
             }
 
-            /* Flip hint */
-            .flip-hint {
-                font-size: 0.9rem;
-                padding: 8px 20px;
-                bottom: 20px;
-            }
-
-            /* Page indicator */
-            .page-indicator {
-                font-size: 10px;
-                bottom: 5px;
-            }
-
-            /* Heart animation */
-            #heartCanvas {
-                opacity: 0.6;
+            .contact-container div:last-child {
+                text-align: center !important;
             }
 
             .photo-container {
@@ -468,10 +462,59 @@
                 border-radius: 12px;
                 pointer-events: none;
             }
+
+            /* Updated header adjustments */
+            .invitation-header h1 {
+                font-size: 1rem !important;
+                line-height: 1.2 !important;
+                padding: 0 0.3rem !important;
+                margin-bottom: 0.4rem !important;
+                white-space: nowrap !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                max-width: 100% !important;
+            }
+
+            /* Optional: Add word-break if needed */
+            .invitation-header h1 span {
+                display: inline-block !important;
+            }
+
+            /* Reduce overall height to ensure everything fits */
+            .book {
+                height: 85vh !important;
+            }
+
+            .mobile-invitation {
+                padding-top: 0.4rem !important;
+            }
         }
 
         /* Add this for very small devices */
         @media screen and (max-width: 360px) {
+            .book {
+                max-width: 300px;
+                height: 75vh;
+            }
+
+            .mobile-invitation {
+                padding: 0.5rem 0.3rem;
+            }
+
+            .invitation-header h1 {
+                font-size: 1rem !important;
+            }
+
+            .contact-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-container div {
+                text-align: center !important;
+                margin-bottom: 0.2rem;
+            }
+
             .book {
                 max-width: 320px;
             }
@@ -494,6 +537,11 @@
             
             img {
                 max-height: 85%;
+            }
+
+            .invitation-header h1 {
+                font-size: 0.9rem !important;
+                padding: 0 0.2rem !important;
             }
         }
     </style>
@@ -561,8 +609,8 @@
                         <div class="invitation-footer">
                             <div class="contact-container">
                                 <div>
-                                    <h3 style="font-size: 1.1rem; color: #FFD700; margin: 0 0 0.1rem 0;">Your's</h3>
-                                    <p style="font-size: 1rem; margin: 0;">Smt/Sri. Janavi Suresh Babu</p>
+                                    <h3 style="font-size: 1.1rem; color: #FFD700; margin-left:18px">Your's</h3>
+                                    <p style="font-size: 1rem; margin-left: 18px;">Smt/Sri. Janavi Suresh Babu</p>
                                 </div>
                                 <div style="text-align: right;">
                                     <h3 style="font-size: 0.9rem; margin: 0 0 0.1rem 0;">Mob: 9448048294 | 7019312549</h3>
