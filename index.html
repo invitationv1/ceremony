@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Family Photo Album</title>
+    <title>Ceremony Invitation</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -74,7 +74,6 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            padding: 30px;
             box-sizing: border-box;
             backface-visibility: hidden;
             overflow: hidden;
@@ -92,19 +91,19 @@
         
         .photo-container {
             flex: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             position: relative;
+            width: 100%;
+            height: 100%;
             overflow: hidden;
         }
         
         img {
-            max-width: 90%;
-            max-height: 90%;
-            object-fit: contain;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 10px solid white;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border: none;
+            box-shadow: none;
             transition: transform 0.3s ease;
         }
         
@@ -180,18 +179,35 @@
         
         .flip-hint {
             position: absolute;
-            right: 20px;
-            bottom: 50%;
-            color: #aaa;
-            font-size: 14px;
-            transform: translateY(50%);
-            animation: pulse 2s infinite;
+            left: 50%;
+            bottom: 30px;
+            transform: translateX(-50%);
+            background-color: #d23369;
+            color: white;
+            font-size: 18px;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+            box-shadow: 0 4px 15px rgba(210, 51, 105, 0.3);
+            transition: all 0.3s ease;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         }
         
-        @keyframes pulse {
-            0% { opacity: 0.5; }
-            50% { opacity: 1; }
-            100% { opacity: 0.5; }
+        .flip-hint:hover {
+            background-color: #b13060;
+            transform: translateX(-50%) scale(1.05);
+            box-shadow: 0 6px 20px rgba(210, 51, 105, 0.4);
+        }
+        
+        @keyframes bounce {
+            0%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
         
         @keyframes fadeInUp {
@@ -286,8 +302,7 @@
                 <div class="photo-container">
                     <img src="https://res.cloudinary.com/dxgyrgr2p/image/upload/v1741258444/yash/iz1wmifdbpm32mr3mwqo.jpg" alt="Family Photo">
                 </div>
-                <div class="caption">Beautiful moments with our loved ones</div>
-                <div class="flip-hint">Click to flip →</div>
+                <div class="flip-hint">Next Page →</div>
                 <div class="page-indicator">Page 2</div>
             </div>
         </div>
