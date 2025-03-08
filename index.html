@@ -103,7 +103,7 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain; /* Change from cover to contain */
             border: none;
             box-shadow: none;
             transition: transform 0.3s ease;
@@ -332,6 +332,7 @@
                 width: 100%;
                 max-width: 400px;
                 height: 85vh;
+                margin: 20px auto;
             }
 
             .page,
@@ -433,6 +434,40 @@
             #heartCanvas {
                 opacity: 0.6;
             }
+
+            .photo-container {
+                height: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 20px;
+                box-sizing: border-box;
+            }
+
+            img {
+                position: relative;
+                width: auto;
+                height: auto;
+                max-width: 100%;
+                max-height: 90%;
+                border-radius: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+                margin: auto;
+                object-fit: contain;
+            }
+
+            /* Add a decorative frame */
+            .photo-container::before {
+                content: '';
+                position: absolute;
+                top: 10px;
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+                border: 2px solid rgba(210, 51, 105, 0.3);
+                border-radius: 12px;
+                pointer-events: none;
+            }
         }
 
         /* Add this for very small devices */
@@ -451,6 +486,14 @@
 
             .venue-container p {
                 font-size: 0.8rem !important;
+            }
+
+            .photo-container {
+                padding: 15px;
+            }
+            
+            img {
+                max-height: 85%;
             }
         }
     </style>
